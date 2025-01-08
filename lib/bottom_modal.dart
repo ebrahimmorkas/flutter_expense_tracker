@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:expense_tracker/models/expense_card_blueprint.dart';
 
 class BottomModal extends StatefulWidget {
-  const BottomModal({super.key});
+  const BottomModal({super.key, required this.addExpense});
+
+  final Function(String, double, DateTime, Category) addExpense;
 
   @override
   State<BottomModal> createState() => _BottomModalState();
@@ -19,6 +21,25 @@ class _BottomModalState extends State<BottomModal> {
   void dispose() {
     titleController.dispose();
     super.dispose();
+  }
+
+  void handleFormSubmit() {
+    final finalAmount = double.tryParse(amountController.text);
+    if (titleController.text.isEmpty ||
+        finalAmount == null ||
+        selectedDate == null) {
+      // Show an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fill all fields correctly.'),
+        ),
+      );
+      return; // Exit the function if validation fails
+    }
+    widget.addExpense(
+        titleController.text, finalAmount!, selectedDate!, selectedCategory);
+
+    Navigator.pop(context);
   }
 
   DateTime now = DateTime.now();
@@ -85,9 +106,7 @@ class _BottomModalState extends State<BottomModal> {
                     });
                   }),
               ElevatedButton(
-                onPressed: () {
-                  print(titleController.text);
-                },
+                onPressed: handleFormSubmit,
                 child: Text("Submit"),
               ),
               ElevatedButton(
