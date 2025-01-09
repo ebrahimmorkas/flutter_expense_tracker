@@ -56,7 +56,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(actions: [
+      appBar: AppBar(title: Text("Flutter Expense App"), actions: [
         IconButton(
           onPressed: () {
             showModalBottomSheet(

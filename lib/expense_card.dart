@@ -32,14 +32,23 @@ class _ExpenseCardState extends State<ExpenseCard> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return Dismissible(
+            background: Container(
+              color: Theme.of(context).colorScheme.error,
+              margin: EdgeInsets.symmetric(
+                  horizontal: Theme.of(context).cardTheme.margin!.horizontal),
+            ),
             key: ValueKey(widget.expensesList[index].id),
             onDismissed: (direction) {
               widget.removeExpense(widget.expensesList[index]);
             },
             child: Card(
                 child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.expensesList[index].title),
+                Text(
+                  widget.expensesList[index].title,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
                 Row(
                   children: [
                     Text(widget.expensesList[index].amount.toString()),
