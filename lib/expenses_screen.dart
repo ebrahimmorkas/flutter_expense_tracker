@@ -32,6 +32,12 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     });
   }
 
+  void removeExpense(ExpenseCardBlueprint expense) {
+    setState(() {
+      expensesList.remove(expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +45,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
         IconButton(
           onPressed: () {
             showModalBottomSheet(
+              isScrollControlled: true,
               context: context,
               builder: (context) {
                 return BottomModal(addExpense: addExpense);
@@ -50,6 +57,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
       ]),
       body: ExpenseCard(
         expensesList: expensesList,
+        removeExpense: removeExpense,
       ),
     );
   }

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseCard extends StatefulWidget {
-  ExpenseCard({super.key, required this.expensesList});
+  ExpenseCard(
+      {super.key, required this.expensesList, required this.removeExpense});
   final List<ExpenseCardBlueprint> expensesList;
+  final Function(ExpenseCardBlueprint) removeExpense;
 
   @override
   State<ExpenseCard> createState() => _ExpenseCardState();
@@ -30,24 +32,29 @@ class _ExpenseCardState extends State<ExpenseCard> {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return Card(
-            child: Column(
-          children: [
-            Text(widget.expensesList[index].title),
-            Row(
+        return Dismissible(
+            key: ValueKey(widget.expensesList[index].id),
+            onDismissed: (direction) {
+              widget.removeExpense(widget.expensesList[index]);
+            },
+            child: Card(
+                child: Column(
               children: [
-                Text(widget.expensesList[index].amount.toString()),
-                const Spacer(),
+                Text(widget.expensesList[index].title),
                 Row(
                   children: [
-                    Text(widget.expensesList[index].category.name),
-                    Text(widget.expensesList[index].date.toString()),
+                    Text(widget.expensesList[index].amount.toString()),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        Text(widget.expensesList[index].category.name),
+                        Text(widget.expensesList[index].date.toString()),
+                      ],
+                    ),
                   ],
-                ),
+                )
               ],
-            )
-          ],
-        ));
+            )));
       },
       itemCount: widget.expensesList.length,
     );

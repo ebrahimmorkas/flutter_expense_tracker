@@ -37,7 +37,7 @@ class _BottomModalState extends State<BottomModal> {
       return; // Exit the function if validation fails
     }
     widget.addExpense(
-        titleController.text, finalAmount!, selectedDate!, selectedCategory);
+        titleController.text, finalAmount, selectedDate!, selectedCategory);
 
     Navigator.pop(context);
   }
