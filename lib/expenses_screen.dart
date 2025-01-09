@@ -24,6 +24,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
         category: Category.work),
   ];
 
+// Function that will be called from bottom_modal.dart file to add expense
   void addExpense(
       String title, double amount, DateTime date, Category category) {
     setState(() {
@@ -32,10 +33,24 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
     });
   }
 
+// Function that will be called from expense_card.dart file to remove an expense
   void removeExpense(ExpenseCardBlueprint expense) {
+    final expenseIndex = expensesList.indexOf(expense);
     setState(() {
       expensesList.remove(expense);
     });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: Duration(seconds: 3),
+      content: Text("Expense deleted"),
+      action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              expensesList.insert(expenseIndex, expense);
+            });
+          }),
+    ));
   }
 
   @override

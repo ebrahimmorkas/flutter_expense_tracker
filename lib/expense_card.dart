@@ -1,10 +1,9 @@
-import 'package:expense_tracker/expenses_screen.dart';
 import 'package:expense_tracker/models/expense_card_blueprint.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseCard extends StatefulWidget {
-  ExpenseCard(
+  const ExpenseCard(
       {super.key, required this.expensesList, required this.removeExpense});
   final List<ExpenseCardBlueprint> expensesList;
   final Function(ExpenseCardBlueprint) removeExpense;
